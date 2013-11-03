@@ -1,0 +1,4 @@
+Flask==0.10.1
+Flask-Script==0.6.2
+Flask-ZODB==0.1
+Flask-Principal==0.4.0

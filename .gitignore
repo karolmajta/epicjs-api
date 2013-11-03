@@ -1,0 +1,7 @@
+*.pyc
+*.fs
+*.fs.index
+*.lock
+*.tmp
+
+epicjs-dev.cfg
