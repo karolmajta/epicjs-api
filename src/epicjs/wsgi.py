@@ -2,10 +2,13 @@ import os
 from ConfigParser import ConfigParser
 
 from flask import Flask
+from flask.ext import restful  # @UnresolvedImport
 
 from db import storage, bootstrap_storage
 
 import dao.auth
+from api.auth import CurrentToken, TokenDetail
+from epicjs.api.koans import MeditationList
 
 
 def bootstrap(config_file=None, project_root=None):
@@ -21,7 +24,9 @@ def bootstrap(config_file=None, project_root=None):
     config = ConfigParser()
     config.read(config_file)
     
-    ZODB_URI = config.get('zodb', 'uri')    
+    SERVER_SECRET = config.get('commons', 'secret')
+    
+    ZODB_URI = config.get('zodb', 'uri')  
 
     #####################################################################
     # Some configuration magic...
@@ -45,6 +50,12 @@ def bootstrap(config_file=None, project_root=None):
     )
     
     #####################################################################
+    # Add some custom config
+    #####################################################################
+    
+    application.config['SERVER_SECRET'] = SERVER_SECRET
+    
+    #####################################################################
     # Bootstrap the persistence
     #####################################################################
     
@@ -52,8 +63,18 @@ def bootstrap(config_file=None, project_root=None):
     storage.init_app(application)  # @UndefinedVariable
     model_map = {
         'auth': dao.auth,
+        'koans': dao.koans,
     }
     bootstrap_storage(application, storage, model_map)
+    
+    #####################################################################
+    # Add routing
+    #####################################################################
+    
+    api = restful.Api(application)
+    api.add_resource(CurrentToken, '/token')
+    api.add_resource(TokenDetail, '/tokens/<string:key>')
+    api.add_resource(MeditationList, '/meditations/')
     
     #####################################################################
     # And allow others to mess with it :)
