@@ -38,8 +38,8 @@ def parse_meditation(lines):
                 koans[current]['code'].append(line)
     
     for koan in koans.values():
-        koan['hint'] = "\n".join(koan['hint'])
-        koan['code'] = '\n'.join(koan['code'])
+        koan['hint'] = "".join(koan['hint'])
+        koan['code'] = "".join(koan['code'])
 
     
     ks = [Koan(k['slug'], k['name'], k['hint'], k['code']) for k in koans.values()]  

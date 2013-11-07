@@ -7,16 +7,14 @@ from persistent import Persistent
 
 from flask.ext.zodb import BTree  # @UnresolvedImport
 
-from epicjs.entity.koans import \
-    Meditation as MeditationEntity, \
-    Answer as AnswerEntity
+from epicjs.entity.koans import Meditation as MeditationEntity
 
 
 class Meditation(Persistent, MeditationEntity):
     
     class Meta:
         persist_in = BTree
-        unique = ('name',)
+        unique = ('slug',)
     
     def add_koan(self, koan):
         koan.meditation = self
@@ -26,10 +24,3 @@ class Meditation(Persistent, MeditationEntity):
     def drop_koan(self, name):
         self.koans = filter(lambda n: n != name, self.koans)
         self._p_changed = True
-
-
-class Answer(Persistent, AnswerEntity):
-    
-    class Meta:
-        persist_in = BTree
-        unique = ('author', 'koan')

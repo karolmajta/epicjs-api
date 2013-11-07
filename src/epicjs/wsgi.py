@@ -8,7 +8,7 @@ from db import storage, bootstrap_storage
 
 import dao.auth
 from api.auth import CurrentToken, TokenDetail
-from epicjs.api.koans import MeditationList
+from epicjs.api.koans import MeditationList, MeditationDetail
 
 
 def bootstrap(config_file=None, project_root=None):
@@ -75,6 +75,7 @@ def bootstrap(config_file=None, project_root=None):
     api.add_resource(CurrentToken, '/token')
     api.add_resource(TokenDetail, '/tokens/<string:key>')
     api.add_resource(MeditationList, '/meditations/')
+    api.add_resource(MeditationDetail, '/meditations/<string:slug>')
     
     #####################################################################
     # And allow others to mess with it :)
