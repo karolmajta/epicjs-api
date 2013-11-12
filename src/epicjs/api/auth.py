@@ -1,18 +1,18 @@
 from flask import g, abort
 
-from flask.ext import restful  # @UnresolvedImport
 from flask.ext.restful import marshal_with  # @UnresolvedImport
 
 from epicjs.dao.auth import User, Token
 from epicjs.parsers.auth import credentials_parser
 from epicjs.api.decorators import authenticate
 from epicjs.serializers.auth import token_fields
+from epicjs.api.commons import CorsResource
 
 
-class CurrentToken(restful.Resource):
+class CurrentToken(CorsResource):
     
     @marshal_with(token_fields)
-    def get(self):
+    def retrieve(self):
         credentials = credentials_parser.parse_args()  # @UndefinedVariable
         user = User.get(credentials['username'])
         if not user: abort(404)
@@ -22,10 +22,10 @@ class CurrentToken(restful.Resource):
         return token
 
 
-class TokenDetail(restful.Resource):
+class TokenDetail(CorsResource):
     
     @authenticate
-    def delete(self, key):
+    def destroy(self, key):
         token = Token.get(key)
         if not token: abort(404)
         if token.user != g.user: abort(403)

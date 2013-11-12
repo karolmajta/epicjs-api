@@ -7,9 +7,9 @@ from persistent import Persistent
 
 from flask.ext.zodb import BTree  # @UnresolvedImport
 
-from ..entity.auth import User as UserEntity
-from ..entity.auth import Token as TokenEntity
-from ..entity.auth import Group as GroupEntity
+from epicjs.entity.auth import User as UserEntity
+from epicjs.entity.auth import Token as TokenEntity
+from epicjs.entity.auth import Group as GroupEntity
 
 
 class User(UserEntity, Persistent):

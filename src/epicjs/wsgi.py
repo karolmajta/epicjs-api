@@ -2,14 +2,15 @@ import os
 from ConfigParser import ConfigParser
 
 from flask import Flask
+
 from flask.ext import restful  # @UnresolvedImport
 
 from db import storage, bootstrap_storage
 
-import dao.auth
-from api.auth import CurrentToken, TokenDetail
-from epicjs.api.koans import MeditationList, MeditationDetail
+import epicjs.dao.auth
 
+from epicjs.api.auth import CurrentToken, TokenDetail
+from epicjs.api.koans import MeditationList, MeditationDetail
 
 def bootstrap(config_file=None, project_root=None):
     #####################################################################
@@ -62,8 +63,8 @@ def bootstrap(config_file=None, project_root=None):
     application.config['ZODB_STORAGE'] = ZODB_URI
     storage.init_app(application)  # @UndefinedVariable
     model_map = {
-        'auth': dao.auth,
-        'koans': dao.koans,
+        'auth': epicjs.dao.auth,
+        'koans': epicjs.dao.koans,
     }
     bootstrap_storage(application, storage, model_map)
     
