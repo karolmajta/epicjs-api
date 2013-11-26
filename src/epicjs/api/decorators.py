@@ -8,7 +8,11 @@ from flask import g, request
 from epicjs.api.utils import get_user_from_request
 
 HTTP_METHODS = ['head', 'get', 'options', 'post', 'put', 'patch', 'delete']
-RESPONSE_UNAUTHORIZED = ({}, 401, {'WWW-Authenticate': "Token realm=\"epicjs\""})
+RESPONSE_UNAUTHORIZED = (
+    {"detail": "Unauthorized"},
+    401,
+    {'WWW-Authenticate': "Token realm=\"epicjs\""}
+)
 
 
 def authenticate(old_method):

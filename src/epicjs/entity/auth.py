@@ -19,6 +19,7 @@ class User():
         self.password_hash = self.hash_password(password)
         self.is_admin = is_admin
         self.groups = []
+        self.answers = {}
 
     def __eq__(self, other):
         return self.username == other.username

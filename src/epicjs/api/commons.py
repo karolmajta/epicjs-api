@@ -8,25 +8,32 @@ from flask.ext import restful  # @UnresolvedImport
 class CorsResource(restful.Resource):
     
     methods = ['HEAD', 'OPTIONS', 'GET', 'POST']
-    headers = ['X-Requested-With', 'Accept']
+    headers = ['X-Requested-With', 'Accept', 'Authorization', 'Content-Type']
     origins = ['*']
+    method_not_allowed = {"detail": "Method not allowed."}, 405
     
     def options(self, *args, **kwargs):
         return {}, 200, self.build_cors_headers()
     
     def get(self, *args, **kwargs):
+        if not hasattr(self, 'retrieve'):
+            return self.__class__.method_not_allowed
         retval = self.retrieve(*args, **kwargs)
         cleaned_retval = self.clean_retval(retval)
         cleaned_retval[2].update(self.build_cors_headers())
         return cleaned_retval
     
     def post(self, *args, **kwargs):
+        if not hasattr(self, 'create'):
+            return self.__class__.method_not_allowed
         retval = self.create(*args, **kwargs)
         cleaned_retval = self.clean_retval(retval)
         cleaned_retval[2].update(self.build_cors_headers())
         return cleaned_retval
     
-    def destroy(self, *args, **kwargs):
+    def delete(self, *args, **kwargs):
+        if not hasattr(self, 'destroy'):
+            return self.__class__.method_not_allowed
         retval = self.destroy(*args, **kwargs)
         cleaned_retval = self.clean_retval(retval)
         cleaned_retval[2].update(self.build_cors_headers())

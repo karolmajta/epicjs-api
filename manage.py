@@ -37,7 +37,7 @@ epicjs_manager.add_command('addresponse', AddReply())
 epicjs_manager.add_command('dropresponse', DropReply())
 
 manager = Manager(application)
-manager.add_command('epijs', epicjs_manager)
+manager.add_command('epicjs', epicjs_manager)
 
 if __name__ == "__main__":
     manager.run()

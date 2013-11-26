@@ -25,15 +25,14 @@ class Koan(object):
         self.meditation = None
     
     def __eq__(self, other):
-        return self.meditation == other.meditation and self.name == other.name
+        return self.meditation == other.meditation and self.slug == other.slug
 
 
 class Answer(object):
     
-    def __init__(self, koan, author, text=""):
+    def __init__(self, koan, text=""):
         self.koan = koan
         self.text = text
-        self.author = author
     
     def __eq__(self, other):
-        return self.koan == other.koan and self.author == other.author
+        return self.koan == other.koan

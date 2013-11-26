@@ -17,6 +17,10 @@ class User(UserEntity, Persistent):
     class Meta:
         persist_in = BTree
         unique = ('username',)
+        
+    def add_answer(self, answer):
+        self.answers[answer.koan] = answer
+        self._p_changed = True
 
 
 class Token(TokenEntity, Persistent):

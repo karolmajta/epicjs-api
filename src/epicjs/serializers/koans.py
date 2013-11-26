@@ -19,5 +19,6 @@ meditation_detail_fields = {
         'hint': fields.String,
         'name': fields.String,
         'code': fields.String,
+        'answer': fields.String,
     })),
 }
