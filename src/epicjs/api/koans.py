@@ -23,7 +23,7 @@ class MeditationList(CorsResource):
         
         meditations = list(Meditation.collection().values())
         s = sorted(meditations, key=lambda m: m.slug)
-        return [marshal(m, meditation_list_fields) for m in s]
+        return [marshal(m, meditation_list_fields) for m in s]   
 
 
 class MeditationDetail(CorsResource):
