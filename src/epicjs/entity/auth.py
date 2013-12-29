@@ -13,12 +13,10 @@ from passlib.hash import sha1_crypt  # @UnresolvedImport
 
 class User():
     
-    def __init__(self, username, password, is_admin=False):
+    def __init__(self, username, password):
         self.username = username
         self.salt = "".join(choice(letters) for _ in range(22)) 
         self.password_hash = self.hash_password(password)
-        self.is_admin = is_admin
-        self.groups = []
         self.answers = {}
 
     def __eq__(self, other):
@@ -42,13 +40,3 @@ class Token():
     
     def __eq__(self, other):
         return self.key == other.key
-
-
-class Group():
-    
-    def __init__(self, name):
-        self.name = name
-        self.users = []
-    
-    def __eq__(self, other):
-        return self.name == other.name

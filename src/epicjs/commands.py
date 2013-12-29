@@ -1,7 +1,7 @@
 from flask.ext.script import Command  # @UnresolvedImport
 from flask.ext.script import Option  # @UnresolvedImport
 
-from epicjs.dao.auth import User, Group
+from epicjs.dao.auth import User
 from epicjs.reader import parse_meditation
 from epicjs.dao.koans import Meditation
 
@@ -19,7 +19,7 @@ class AddUser(Command):
         if User.get(username):
             print "User with given username already exists"
         else:
-            user = User(username, password, is_admin=is_admin)
+            user = User(username, password)
             user.save()
 
 
@@ -36,50 +36,6 @@ class DropUser(Command):
             u.delete()
         else:
             print "User with given username not found"
-
-
-class AddGroup(Command):
-    "Adds group with given name to database."
-
-    option_list = (
-        Option('name'),
-    )
-
-    def run(self, name):
-        if Group.get(name):
-            print "Group with given name already exists"
-        else:
-            group = Group(name)
-            group.save()
-
-
-class DropGroup(Command):
-    "Removes user with given username from database"
-
-    option_list = (
-        Option('name'),
-    )
-
-    def run(self, name):
-        g = Group.get(name)
-        if g:
-            g.delete()
-        else:
-            print "Group with given name not found"
-
-
-class AddRole(Command):
-    "Adds a user to given group"
-
-    def run(self):
-        print "Adding role"
-
-
-class DropRole(Command):
-    "Removes user from group"
-    
-    def run(self):
-        print "Dropping role"
 
 
 class AddMeditation(Command):
@@ -122,18 +78,3 @@ class DropMeditation(Command):
             for m in matches: print "\t{0}".format(m.slug)
         else:
             matches[0].delete()
-        
-
-
-class AddReply(Command):
-    "Adds reply to given koan in given mediation for given user"
-    
-    def run(self):
-        print "Adding reply"
-
-
-class DropReply(Command):
-    "Drops reply from given koan in given meditation for given user"
-    
-    def run(self):
-        print "Deleting reply"

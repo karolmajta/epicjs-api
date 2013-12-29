@@ -10,9 +10,5 @@ token_fields = {
     'key': fields.String,
     'user': fields.Nested({
         'username': fields.String,
-        'is_admin': fields.String,
-        'groups': fields.List(fields.Nested({
-            'name': fields.String,
-        })),
     }),
 }

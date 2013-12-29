@@ -18,7 +18,7 @@ def bootstrap(config_file=None, project_root=None):
     #####################################################################
     
     if not config_file:
-        config_file = os.path.join(os.getcwd(), 'epicjs-dev.cfg')
+        config_file = os.path.join(os.getcwd(), 'epicjs.cfg')
     if not os.path.exists(config_file):
         msg = "Config file not found at `{0}`".format(config_file)
         raise AssertionError(msg)
